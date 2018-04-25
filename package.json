@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env PORT=3001 node app.js",
+    "start": "node app.js",
     "dev": "gulp & nodemon app.js"
   },
   "devDependencies": {
@@ -22,8 +22,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
-    "cross-env": "^5.1.4",
+    "dotenv": "^5.0.1",
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "gulp-concat": "^2.6.1",
