@@ -1,11 +1,14 @@
+/* eslint-disable node/no-unpublished-require */
 const gulp = require('gulp')
 const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const cssnano = require('gulp-cssnano')
-const browserSync = require('browser-sync')
 const plumber = require('gulp-plumber')
+const concat = require('gulp-concat')
+const uglify = require('gulp-uglifyjs')
+/* eslint-enable node/no-unpublished-require */
 
-gulp.task('scss', () =>{
+gulp.task('scss', () => {
   return gulp
     .src('dev/scss/**/*.scss')
     .pipe(plumber())
@@ -16,20 +19,19 @@ gulp.task('scss', () =>{
       })
     )
     .pipe(cssnano())
-    .pipe(gulp.dest('dist/css'))
-    .pipe(browserSync.reload({ stream: true }))
+    .pipe(gulp.dest('public/stylesheets'))
 })
 
-gulp.task('browser-sync', () => {
-  browserSync({
-    server: {
-      baseDir: 'dist'
-    },
-    notify: false
-  })
-})
+gulp.task('scripts', () =>
+  gulp.src([
+    'dev/js/auth.js'
+  ])
+    .pipe(concat('scripts.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('public/javascripts'))
+)
 
-gulp.task('default', ['browser-sync', 'scss'], () => {
+gulp.task('default', ['scss', 'scripts'], () => {
   gulp.watch('dev/scss/**/*.scss', ['scss'])
-  gulp.watch('dist/*.html', browserSync.reload)
+  gulp.watch('dev/js/**/*.js', ['scripts'])
 })
